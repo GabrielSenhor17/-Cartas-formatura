@@ -1,73 +1,237 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#f7f6f2">
-<title>Uma lembrança para você</title>
-<style>
-:root{--bg:#f7f6f2;--paper:#fffefa;--ink:#292824;--muted:#77756e;--line:#e8e5dc;--accent:#b6a58c}
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);font-family:Georgia,"Times New Roman",serif;line-height:1.7}
-.wrap{width:min(100% - 32px,680px);margin:0 auto;padding:38px 0 56px}
-.top{text-align:center;color:var(--muted);font:11px/1.5 Arial,sans-serif;letter-spacing:.19em;text-transform:uppercase}
-.card{background:var(--paper);border:1px solid var(--line);padding:clamp(24px,6vw,54px);margin-top:24px;box-shadow:0 10px 35px rgba(40,35,25,.035)}
-h1{font-size:clamp(34px,8vw,54px);font-weight:400;line-height:1.12;text-align:center;margin:24px 0 10px}
-.date{text-align:center;color:var(--muted);font:12px Arial,sans-serif;letter-spacing:.08em}
-.rule{height:1px;background:var(--line);margin:30px 0}
-h2{font-size:22px;font-weight:400;margin:0 0 12px}
-p{font-size:17px;white-space:pre-wrap}
-.message{font-size:17px}
-.photos{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:16px}
-.photos img{width:100%;aspect-ratio:4/5;object-fit:cover;background:#eee;border-radius:2px}
-.closing{text-align:center;font-size:24px;font-style:italic;margin:28px 0 6px}
-.signature{text-align:center;color:var(--muted);font-size:15px}
-.footer{text-align:center;color:var(--muted);font:11px Arial,sans-serif;letter-spacing:.1em;margin-top:24px}
-.notice{text-align:center;padding:60px 18px;color:var(--muted);font-family:Arial,sans-serif}
-.notice h1{font-family:Georgia,serif;color:var(--ink)}
-@media(max-width:420px){.photos{grid-template-columns:1fr 1fr}.card{padding:24px 20px}}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Uma carta especial 🤍</title>
+
+  <style>
+    :root {
+      --scene: #873744;
+      --signature: #F5CF45;
+      --paper: #FFF9F0;
+      --ink: #171717;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      padding: 30px 16px;
+      background: var(--scene);
+      color: var(--ink);
+      font-family: Georgia, serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .page {
+      width: 100%;
+      max-width: 650px;
+    }
+
+    .instagram {
+      text-align: center;
+      margin-bottom: 18px;
+      font-family: Arial, sans-serif;
+    }
+
+    .instagram a {
+      color: white;
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    .card {
+      background: var(--paper);
+      border-radius: 18px;
+      padding: 35px 25px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 12px 35px #0003;
+      border: 1px solid #ffffff80;
+    }
+
+    .decoration {
+      height: 5px;
+      width: 75px;
+      border-radius: 20px;
+      background: var(--scene);
+      margin: 0 auto 25px;
+      position: relative;
+    }
+
+    .decoration::after {
+      content: "";
+      position: absolute;
+      width: 20px;
+      height: 5px;
+      border-radius: 20px;
+      background: var(--signature);
+      right: -27px;
+      top: 0;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 27px;
+      margin: 0 0 28px;
+      color: var(--ink);
+    }
+
+    .message {
+      font-size: 17px;
+      line-height: 1.85;
+      white-space: pre-line;
+      color: var(--ink);
+      overflow-wrap: anywhere;
+    }
+
+    .closing {
+      margin-top: 30px;
+      line-height: 1.8;
+      font-size: 17px;
+    }
+
+    .signature {
+      display: inline-block;
+      margin-top: 8px;
+      color: var(--signature);
+      font-weight: bold;
+      font-size: 21px;
+    }
+
+    .bottom-decoration {
+      text-align: center;
+      margin-top: 28px;
+      color: var(--scene);
+      letter-spacing: 8px;
+      font-size: 15px;
+    }
+
+    .photos {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 10px;
+      margin-top: 25px;
+    }
+
+    .photos img {
+      width: 100%;
+      border-radius: 10px;
+      object-fit: cover;
+    }
+
+    .error {
+      text-align: center;
+      color: white;
+      font-family: Arial, sans-serif;
+    }
+
+    @media (max-width: 480px) {
+      .card {
+        padding: 28px 20px;
+      }
+
+      h1 {
+        font-size: 24px;
+      }
+
+      .message {
+        font-size: 16px;
+      }
+    }
+  </style>
 </head>
+
 <body>
-<main class="wrap" id="app">
-  <div class="top">04 de dezembro de 2026 · Uma lembrança</div>
-  <article class="card">
-    <div class="date">UMA CARTA FEITA ESPECIALMENTE PARA VOCÊ</div>
-    <h1>Algumas pessoas<br>ficam na história.</h1>
-    <p style="text-align:center;color:#77756e">Carregando sua lembrança...</p>
-  </article>
-  <div class="footer">COM CARINHO, GABRIEL</div>
-</main>
-<script src="cartas.js"></script>
-<script>
-(function(){
-  const params = new URLSearchParams(location.search);
-  const id = params.get("c");
-  const data = window.CARTAS || {};
-  const person = id && data[id];
-  const app = document.getElementById("app");
-  if(!person){
-    app.innerHTML = '<section class="notice"><div class="top">04 de dezembro de 2026</div><h1>Uma lembrança para você.</h1><p>Este link ainda não tem uma carta cadastrada.<br>Confira se o QR Code está correto.</p><div class="footer">COM CARINHO, GABRIEL</div></section>';
-    return;
-  }
-  const safe = s => String(s || "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-  const photos = (person.photos || []).filter(Boolean).map(src => '<img src="'+safe(src)+'" alt="Uma lembrança" loading="lazy">').join("");
-  app.innerHTML = `
-    <div class="top">04 de dezembro de 2026 · Uma lembrança</div>
-    <article class="card">
-      <div class="date">UMA CARTA FEITA ESPECIALMENTE PARA VOCÊ</div>
-      <h1>Para ${safe(person.name)}.</h1>
-      <div class="date">Com carinho, Gabriel</div>
-      <div class="rule"></div>
-      <h2>O que você representa para mim</h2>
-      <p class="message">${safe(person.message)}</p>
-      ${photos ? '<div class="rule"></div><h2>Nossas lembranças</h2><div class="photos">'+photos+'</div>' : ''}
-      <div class="rule"></div>
-      <div class="closing">${safe(person.closing || "Obrigado por fazer parte da minha história.")}</div>
-      <div class="signature">Com carinho,<br>Gabriel.</div>
-    </article>
-    <div class="footer">UMA PARTE DA NOSSA HISTÓRIA · 9º ANO</div>`;
-})();
-</script>
+  <main class="page">
+    <div class="instagram">
+      <a href="https://www.instagram.com/gabriel_.az7/"
+         target="_blank" rel="noopener noreferrer">
+        @gabriel_.az7
+      </a>
+    </div>
+
+    <div id="content"></div>
+  </main>
+
+  <script src="cartas.js"></script>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get("c");
+    const person = window.CARTAS?.[id];
+    const content = document.getElementById("content");
+
+    function safeColor(value, fallback) {
+      return /^#[0-9a-fA-F]{6}$/.test(value || "")
+        ? value
+        : fallback;
+    }
+
+    function escapeHTML(value) {
+      return String(value).replace(/[&<>"']/g, char => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#039;"
+      })[char]);
+    }
+
+    if (!person) {
+      content.innerHTML = `
+        <div class="error">
+          <h2>Esta carta não foi encontrada.</h2>
+          <p>Confira se o link está correto.</p>
+        </div>
+      `;
+    } else {
+      document.documentElement.style.setProperty(
+        "--scene",
+        safeColor(person.backgroundColor, "#873744")
+      );
+
+      document.documentElement.style.setProperty(
+        "--signature",
+        safeColor(person.signatureColor, "#F5CF45")
+      );
+
+      const photos = (person.photos || [])
+        .map(url => `
+          <img src="${escapeHTML(url)}" alt="Foto especial">
+        `).join("");
+
+      content.innerHTML = `
+        <section class="card">
+          <div class="decoration"></div>
+
+          <h1>Para ${escapeHTML(person.name)} 🤍</h1>
+
+          <div class="message">
+            ${escapeHTML(person.message)}
+          </div>
+
+          <div class="closing">
+            ${escapeHTML(person.closingText || "")}
+            <br>
+            <span class="signature">
+              ${escapeHTML(person.signature || "Cuscuz 🤍")}
+            </span>
+          </div>
+
+          ${photos ? `<div class="photos">${photos}</div>` : ""}
+
+          <div class="bottom-decoration">✦ · ✧ · ✦</div>
+        </section>
+      `;
+    }
+  </script>
 </body>
 </html>
