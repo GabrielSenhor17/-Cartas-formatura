@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Gerador de fichinhas QR</title>
+<style>
+*{box-sizing:border-box}body{margin:0;padding:18px;background:#f7f6f2;color:#292824;font-family:Arial,sans-serif}
+main{max-width:760px;margin:auto}.panel{background:white;padding:18px;border:1px solid #e8e5dc;border-radius:12px;margin-bottom:16px}
+h1{font:30px Georgia,serif}p{color:#666;line-height:1.5;font-size:14px}
+input,textarea{width:100%;padding:12px;border:1px solid #ddd;border-radius:8px;font-size:16px;margin:6px 0 12px}
+button{border:0;border-radius:8px;background:#292824;color:white;padding:12px 16px;font-size:15px}
+#sheet{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:18px}
+.ticket{background:#fffefa;border:1px dashed #bdb7aa;min-height:190px;padding:14px;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:space-between;break-inside:avoid}
+.ticket strong{font:18px Georgia,serif}.ticket small{font-size:10px;letter-spacing:.12em;color:#777}
+.qr{width:112px;height:112px}
+@media print{body{background:white;padding:0}main>.panel{display:none}#sheet{margin:0;gap:5mm}.ticket{border:1px dashed #aaa;min-height:55mm;padding:4mm}.qr{width:30mm;height:30mm}}
+</style>
+</head>
+<body><main>
+<section class="panel">
+<h1>Fichinhas da formatura</h1>
+<p>Depois de publicar seu site, cole o endereço abaixo. Em seguida, adicione uma pessoa e o identificador dela. O identificador precisa ser igual ao usado em <b>cartas.js</b>.</p>
+<label>Endereço do site publicado</label><input id="base" placeholder="https://seusite.netlify.app">
+<label>Nome da pessoa</label><input id="name" placeholder="Ex.: Ana">
+<label>Identificador da carta</label><input id="code" placeholder="Ex.: a7k2m9">
+<button onclick="add()">Adicionar fichinha</button>
+<button onclick="window.print()" style="background:#716b60;margin-left:6px">Imprimir folha</button>
+<p id="status">Adicione as pessoas. Cada fichinha terá um QR Code individual.</p>
+</section>
+<div id="sheet"></div>
+</main>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script>
+function add(){
+ const base=document.getElementById('base').value.trim().replace(/\/$/,'');
+ const name=document.getElementById('name').value.trim();
+ const code=document.getElementById('code').value.trim();
+ if(!base||!name||!code){alert('Preencha o endereço, o nome e o identificador.');return}
+ let url=base+'/?c='+encodeURIComponent(code);
+ const ticket=document.createElement('div');ticket.className='ticket';
+ const title=document.createElement('strong');title.textContent=name;
+ const qr=document.createElement('div');qr.className='qr';
+ const small=document.createElement('small');small.textContent='UMA LEMBRANÇA ESPECIAL PARA VOCÊ';
+ ticket.append(title,qr,small);document.getElementById('sheet').append(ticket);
+ new QRCode(qr,{text:url,width:112,height:112,correctLevel:QRCode.CorrectLevel.M});
+ document.getElementById('status').textContent='Fichinha criada para '+name+'.';
+ document.getElementById('name').value='';document.getElementById('code').value='';
+}
+</script></body></html>
